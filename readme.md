@@ -29,7 +29,7 @@ lowest latency).
 `var closestAWSRegion = require('@benswinburne/closest-aws-region')`
 
 ### ES Modules:
-`import * as closestAWSRegion from '@benswinburne/closest-aws-region'`
+`import closestAWSRegion from '@benswinburne/closest-aws-region'`
 
 # Quick Start
 
