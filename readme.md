@@ -34,7 +34,9 @@ lowest latency).
 # Quick Start
 
 ```
-const region = findClosestAWSRegion('eu-central-1', {
+// AWS_REGION = eu-central-1
+
+const region = findClosestAWSRegion(process.env.AWS_REGION, {
   filters: ['eu-west-1', 'us-east-1', 'ap-southeast-1'],
 }); // eu-west-1
 ```
@@ -59,7 +61,9 @@ defaults to `us-east-1` if not set.
 Specify the region(s) to limit your search to.
 
 ```
-const region = findClosestAWSRegion('eu-central-1', {
+// AWS_REGION = eu-central-1
+
+const region = findClosestAWSRegion(process.env.AWS_REGION, {
   filters: ['eu-west-1', 'us-east-1']
 }); // eu-west-1
 ```
@@ -74,9 +78,12 @@ because the latency savings by finding the closest region are lost during the
 roundtrip to an external source_
 
 ```
+// AWS_REGION = eu-central-1
+
 const response = await fetch('https://api.cloudping.co/averages');
 const data = await response.json();
-const region = findClosestAWSRegion('eu-west-1', {
+
+const region = findClosestAWSRegion(process.env.AWS_REGION, {
   data: data
 });
 ```
