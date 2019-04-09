@@ -6,13 +6,13 @@ function closest(averages) {
   );
 }
 
-function findClosestAWSRegion(from, options) {
+function findClosestAWSRegion(to, options) {
   options = options || {};
   options.data = options.data || data;
   options.filters = options.filters || [];
   options.default = options.default || options.filters[0] || 'us-east-1';
 
-  const current = options.data.find(a => a.region === from);
+  const current = options.data.find(a => a.region === to);
 
   if (!current) {
     return options.default;
