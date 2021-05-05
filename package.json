@@ -1,6 +1,6 @@
 {
   "name": "@benswinburne/closest-aws-region",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Determines the closest AWS region using average latency between regions",
   "main": "index.js",
   "repository": "https://github.com/benswinburne/closest-aws-region",
