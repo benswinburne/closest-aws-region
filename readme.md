@@ -68,6 +68,12 @@ const region = findClosestAWSRegion(process.env.AWS_REGION, {
 }); // eu-west-1
 ```
 
+### `excludeTo` (defaults to false)
+
+If for example you are looking for the closest region to eu-west-1, with no
+filters applied obviously eu-west-1 is the closted region. By excluding `to`,
+the return value will be the closest region to eu-west-1 which is not eu-west-1.
+
 ### `data`
 
 This option allows for overwriting the static datasource. The format must
