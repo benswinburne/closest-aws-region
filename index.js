@@ -1,8 +1,8 @@
-const data = require('./data');
+const data = require('./data.json');
 
 function closest(averages) {
-  return averages.reduce((prev, curr) =>
-    prev.average < curr.average ? prev : curr
+  return Object.keys(averages).reduce((key, v) =>
+    averages[v] < averages[key] ? v : key
   );
 }
 
@@ -12,19 +12,25 @@ function findClosestAWSRegion(to, options) {
   options.filters = options.filters || [];
   options.default = options.default || options.filters[0] || 'us-east-1';
 
-  const current = options.data.find(a => a.region === to);
+  const current = options.data[to];
 
   if (!current) {
     return options.default;
   }
 
-  const values = options.filters.length
-    ? Object.values(current.averages).filter(value =>
-        options.filters.includes(value.regionTo)
-      )
-    : Object.values(current.averages);
+  if (options.excludeTo) {
+    delete current[to];
+  }
 
-  return closest(values).regionTo;
+  const filtered = options.filters.length
+    ? Object.entries(current).reduce((prev, [region, ping]) => {
+        return options.filters.includes(region)
+          ? { ...prev, [region]: ping }
+          : prev;
+      }, {})
+    : current;
+
+  return closest(filtered);
 }
 
 module.exports = findClosestAWSRegion;

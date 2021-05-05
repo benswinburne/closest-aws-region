@@ -1,9 +1,9 @@
 const findClosestAWSRegion = require('./index');
-const data = require('./data');
+const data = require('./data.json');
 
 describe('when not limiting available regions', () => {
   test('it should find itself', () => {
-    Object.values(data).forEach(({ region }) => {
+    Object.entries(data).forEach(([region]) => {
       const closest = findClosestAWSRegion(region);
 
       expect(region).toBe(closest);
@@ -54,21 +54,12 @@ describe('when limiting available regions', () => {
 describe('using a custom data source', () => {
   function pretendAPICallToCloudping() {
     return new Promise(resolve => {
-      resolve([
-        {
-          region: 'not-a-region',
-          averages: [
-            {
-              regionTo: 'closest-fake-region',
-              average: 7.14,
-            },
-            {
-              regionTo: 'further-away',
-              average: 153.81,
-            },
-          ],
+      resolve({
+        'not-a-region': {
+          'closest-fake-region': 7.14,
+          'further-away': 153.81,
         },
-      ]);
+      });
     });
   }
 
