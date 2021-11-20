@@ -55,7 +55,7 @@ describe('using a custom data source', () => {
   function pretendAPICallToCloudping() {
     return new Promise(resolve => {
       resolve({
-        'not-a-region': {
+        'eu-west-1': {
           'closest-fake-region': 7.14,
           'further-away': 153.81,
         },
@@ -64,11 +64,11 @@ describe('using a custom data source', () => {
   }
 
   test('it should search within the custom data rather than the static defaults', async () => {
-    const closest = findClosestAWSRegion('not-a-region', {
+    const closest = findClosestAWSRegion('eu-west-1', {
       data: await pretendAPICallToCloudping(),
     });
 
-    expect('closest-fake-region').toBe(closest);
+    expect(closest).toBe('closest-fake-region');
   });
 });
 
@@ -86,7 +86,7 @@ describe('when handling defaults in the case of missing/incorrect region', () =>
       filters: ['eu-central-1', 'eu-west-1'],
     });
 
-    expect('eu-central-1').toBe(closest);
+    expect(closest).toBe('eu-central-1');
   });
 
   test('it should fall back to us-east-1 if no close region or default is found', () => {
@@ -95,5 +95,13 @@ describe('when handling defaults in the case of missing/incorrect region', () =>
     });
 
     expect('us-east-1').toBe(closest);
+  });
+
+  it('should not crash when an unknown filter is passed in', () => {
+    const closest = findClosestAWSRegion('eu-west-1', {
+      filters: ['local'],
+    });
+
+    expect(closest).toBe('local');
   });
 });

@@ -30,7 +30,7 @@ function findClosestAWSRegion(to, options) {
       }, {})
     : current;
 
-  return closest(filtered);
+  return Object.keys(filtered).length ? closest(filtered) : options.default;
 }
 
 module.exports = findClosestAWSRegion;
